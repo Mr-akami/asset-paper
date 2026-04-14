@@ -1,3 +1,8 @@
+# Asset images (original reference)
+*.jpg
+*.jpeg
+*.png
+
 # Logs
 logs
 *.log

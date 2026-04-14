@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>取引明細書 作成ツール</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <h1 class="app-title">取引明細書 作成ツール</h1>
+
+    <div class="layout">
+      <!-- ===== FORM PANEL ===== -->
+      <div class="form-panel">
+
+        <fieldset>
+          <legend>基本情報</legend>
+          <div class="form-row">
+            <label>顧客名（姓）<input type="text" id="f-sei" value="山田"></label>
+            <label>顧客名（名）<input type="text" id="f-mei" value="太郎"></label>
+          </div>
+          <div class="form-row">
+            <label>ロゴ画像（任意）<input type="file" id="f-logo" accept="image/*"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>物件情報</legend>
+          <label class="form-row-full">物件名<input type="text" id="f-bukken" value="サンプルマンション東京"></label>
+          <div class="form-row">
+            <label>号室<input type="text" id="f-goshitsu" value="101"></label>
+          </div>
+          <div class="form-row">
+            <label>売買代金（円）<input type="number" id="f-baibai" value="10000000"></label>
+          </div>
+          <div class="form-row">
+            <label>手付金（円）<input type="number" id="f-tetsukekin" value="500000"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>決済情報</legend>
+          <div class="form-row">
+            <label>決済日<input type="date" id="f-kessaibi" value="2026-03-31"></label>
+            <label>場所<input type="text" id="f-basho" value="立会無"></label>
+          </div>
+          <div class="form-row">
+            <label>仲介者<input type="text" id="f-chukaisha" value="サンプル不動産株式会社"></label>
+          </div>
+          <div class="form-row">
+            <label>担当<input type="text" id="f-tanto" value="鈴木"></label>
+          </div>
+          <div class="form-row">
+            <label>適格請求書番号<input type="text" id="f-invoice" value="T1234567890123"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>清算項目</legend>
+          <div class="form-row">
+            <label>② 固定資産税 年額（円）<input type="number" id="f-kotei-nenngaku" value="50000"></label>
+          </div>
+          <hr>
+          <div class="form-row">
+            <label>③ 管理費 月額（円）<input type="number" id="f-kanri-getsugaku" value="10000"></label>
+          </div>
+          <div class="form-row">
+            <label>③ 売主支払い済み月
+              <select id="f-kanri-made">
+                <option value="1">1月</option><option value="2">2月</option>
+                <option value="3">3月</option><option value="4">4月</option>
+                <option value="5" selected>5月</option><option value="6">6月</option>
+                <option value="7">7月</option><option value="8">8月</option>
+                <option value="9">9月</option><option value="10">10月</option>
+                <option value="11">11月</option><option value="12">12月</option>
+              </select>
+            </label>
+          </div>
+          <hr>
+          <div class="form-row">
+            <label>④ 家賃 月額（円）<input type="number" id="f-yachin-getsugaku" value="80000"></label>
+          </div>
+          <div class="form-row">
+            <label>売主取得開始日<input type="date" id="f-yachin-start" value="2026-03-01"></label>
+            <label>売主取得終了日<input type="date" id="f-yachin-end" value="2026-03-30"></label>
+          </div>
+          <hr>
+          <div class="form-row">
+            <label>⑤ 敷金の移行（円・任意）<input type="number" id="f-shikikin" value=""></label>
+          </div>
+          <div class="form-row">
+            <label>⑥ 登記・抹消費用（円）<input type="number" id="f-touki" value="20000"></label>
+          </div>
+          <div class="form-row">
+            <label>⑦ 契約書貼付印紙代金（円・任意）<input type="number" id="f-inshi" value=""></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>振込先 I（売主）</legend>
+          <div class="form-row">
+            <label>銀行名<input type="text" id="f-bank1-name" value="サンプル"></label>
+            <label>支店名<input type="text" id="f-bank1-branch" value="東京"></label>
+          </div>
+          <div class="form-row">
+            <label>口座種類
+              <select id="f-bank1-type"><option value="普通" selected>普通</option><option value="当座">当座</option></select>
+            </label>
+            <label>口座番号<input type="text" id="f-bank1-number" value="1234567"></label>
+          </div>
+          <label class="form-row-full">口座名義（カナ）<input type="text" id="f-bank1-holder" value="ヤマダ タロウ"></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>振込先 II（司法書士等）</legend>
+          <div class="form-row">
+            <label>銀行名<input type="text" id="f-bank2-name" value="サンプル信託"></label>
+            <label>支店名<input type="text" id="f-bank2-branch" value="丸の内"></label>
+          </div>
+          <div class="form-row">
+            <label>口座種類
+              <select id="f-bank2-type"><option value="普通" selected>普通</option><option value="当座">当座</option></select>
+            </label>
+            <label>口座番号<input type="text" id="f-bank2-number" value="7654321"></label>
+          </div>
+          <label class="form-row-full">口座名義（カナ）<input type="text" id="f-bank2-holder" value="シホウショシ サンプル"></label>
+        </fieldset>
+
+        <div class="actions">
+          <button id="btn-pdf" type="button">PDF出力</button>
+          <button id="btn-excel" type="button">Excel出力</button>
+        </div>
+      </div>
+
+      <!-- ===== DOCUMENT PREVIEW ===== -->
+      <div class="preview-panel">
+        <div id="doc" class="document">
+
+          <div class="doc-title-wrap">
+            <span class="doc-title">取引明細書</span>
+          </div>
+
+          <div class="doc-header">
+            <div class="doc-name-area">
+              <span class="doc-name"><span id="d-sei"></span>　<span id="d-mei"></span></span>
+              <span class="doc-sama">様</span>
+            </div>
+            <div class="doc-logo" id="d-logo-wrap"></div>
+          </div>
+
+          <div class="doc-info">
+            <table class="tbl-property">
+              <tr><th>物件名</th><td id="d-bukken"></td></tr>
+              <tr><th>号室</th><td id="d-goshitsu"></td></tr>
+              <tr><th>売買代金</th><td id="d-baibai"></td></tr>
+              <tr><th>手付金</th><td id="d-tetsukekin"></td></tr>
+            </table>
+            <table class="tbl-settlement">
+              <tr><th>決済日：</th><td id="d-kessaibi"></td></tr>
+              <tr><th>場　所：</th><td id="d-basho"></td></tr>
+              <tr><th>仲介者：</th><td id="d-chukaisha"></td></tr>
+              <tr><th>担　当：</th><td id="d-tanto"></td></tr>
+              <tr><th>適格請求書番号：</th><td id="d-invoice"></td></tr>
+            </table>
+          </div>
+
+          <table class="tbl-datecalc">
+            <tr>
+              <th>決済月日数</th><td id="d-month-days"></td>
+              <th>月末までの日数</th><td id="d-days-eom"></td>
+            </tr>
+            <tr>
+              <th>年間日数</th><td id="d-year-days"></td>
+              <th>年末までの日数</th><td id="d-days-eoy"></td>
+            </tr>
+          </table>
+
+          <table class="tbl-main">
+            <colgroup>
+              <col class="col-num">
+              <col class="col-desc">
+              <col class="col-sub">
+              <col class="col-amt">
+              <col class="col-yen">
+              <col class="col-roman">
+            </colgroup>
+
+            <tr class="item-row">
+              <td class="num">①</td>
+              <td class="desc" colspan="2">契約最終代金</td>
+              <td class="amt" id="d-keiyaku-amt"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+
+            <tr class="item-row">
+              <td class="num">②</td>
+              <td class="desc">固定資産税の清算</td>
+              <td class="sub">年額　<span id="d-kotei-nen"></span>　円</td>
+              <td class="amt" id="d-kotei-amt"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+            <tr class="note-row">
+              <td></td>
+              <td class="note" colspan="5">（1月1日現在の所有者が負担すること前提として）</td>
+            </tr>
+
+            <tr class="item-row">
+              <td class="num">③</td>
+              <td class="desc">管理費等の清算</td>
+              <td class="sub">月額　<span id="d-kanri-getsu"></span>　円</td>
+              <td class="amt"></td>
+              <td class="yen"></td>
+              <td></td>
+            </tr>
+            <tr class="note-row">
+              <td></td>
+              <td class="note" colspan="2">（売主が<span id="d-kanri-made-month"></span>月分までの管理費を管理組合に支払うことを前提として）</td>
+              <td class="amt" id="d-kanri-amt"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+            <tr class="detail-row">
+              <td></td>
+              <td class="detail-left"><span id="d-kanri-month"></span>月分日割　<span id="d-kanri-hiwari"></span>　円</td>
+              <td class="detail-right"><span id="d-kanri-full-label"></span>　<span id="d-kanri-full-amt"></span>　<span id="d-kanri-full-yen"></span></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr class="item-row">
+              <td class="num">④</td>
+              <td class="desc">家賃の清算</td>
+              <td class="sub">月額　<span id="d-yachin-getsu"></span>　円</td>
+              <td class="amt"></td>
+              <td class="yen"></td>
+              <td></td>
+            </tr>
+            <tr class="note-row">
+              <td></td>
+              <td class="note" colspan="2">（売主が<span id="d-yachin-range"></span>までの家賃を取得することを前提として）</td>
+              <td class="amt" id="d-yachin-amt"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+            <tr class="detail-row">
+              <td></td>
+              <td class="detail-left" colspan="2"><span id="d-yachin-detail"></span>分　<span id="d-yachin-detail-amt"></span>　円</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr class="item-row">
+              <td class="num">⑤</td>
+              <td class="desc" colspan="2">敷金の移行</td>
+              <td class="amt" id="d-shikikin-amt"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+
+            <tr class="item-row">
+              <td class="num">⑥</td>
+              <td class="desc" colspan="2">登記・抹消費用</td>
+              <td class="amt" id="d-touki-amt"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+
+            <tr class="item-row">
+              <td class="num">⑦</td>
+              <td class="desc" colspan="2">契約書貼付印紙代金</td>
+              <td class="amt" id="d-inshi-amt"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+
+            <tr class="total-row">
+              <td></td>
+              <td colspan="2" class="total-label">合計</td>
+              <td class="amt" id="d-total"></td>
+              <td class="yen">円</td>
+              <td></td>
+            </tr>
+
+            <tr class="bd-row">
+              <td></td>
+              <td class="bd-label" rowspan="2">内訳</td>
+              <td class="bd-type">振込</td>
+              <td class="amt bd-amt" id="d-furikomi1"></td>
+              <td class="yen">円</td>
+              <td class="bd-num">Ⅰ</td>
+            </tr>
+            <tr class="bd-row">
+              <td></td>
+              <td class="bd-type">振込</td>
+              <td class="amt bd-amt" id="d-furikomi2"></td>
+              <td class="yen">円</td>
+              <td class="bd-num">Ⅱ</td>
+            </tr>
+            <tr class="fn-row">
+              <td></td>
+              <td></td>
+              <td class="footnote" colspan="4">※一円未満は四捨五入して計算しています。</td>
+            </tr>
+          </table>
+
+          <div class="doc-transfer">
+            <p class="tf-title">振込先</p>
+            <table class="tbl-transfer">
+              <tr>
+                <th>振込先Ⅰ</th>
+                <td id="d-tf1-bank"></td>
+                <td class="sep">銀行</td>
+                <td id="d-tf1-branch"></td>
+                <td class="sep">支店</td>
+                <td id="d-tf1-type"></td>
+                <td id="d-tf1-number"></td>
+                <td id="d-tf1-holder"></td>
+                <td class="tf-amt" id="d-tf1-amount"></td>
+                <td class="sep">円</td>
+              </tr>
+              <tr>
+                <th>振込先Ⅱ</th>
+                <td id="d-tf2-bank"></td>
+                <td class="sep">銀行</td>
+                <td id="d-tf2-branch"></td>
+                <td class="sep">支店</td>
+                <td id="d-tf2-type"></td>
+                <td id="d-tf2-number"></td>
+                <td id="d-tf2-holder"></td>
+                <td class="tf-amt" id="d-tf2-amount"></td>
+                <td class="sep">円</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
